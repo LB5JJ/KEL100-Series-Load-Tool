@@ -8,6 +8,7 @@ import help
 from load import Load
 
 stop = False
+args = None
 
 def sigint(signum, frame):
     global stop
@@ -17,6 +18,8 @@ def sigint(signum, frame):
         exit(0)
 
 def main() -> None:
+    global args
+    
     signal.signal(signal.SIGINT, sigint)
 
     parser = argparse.ArgumentParser(description = "KORAD Electronic Load Utility")

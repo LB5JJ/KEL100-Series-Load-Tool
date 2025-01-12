@@ -1,0 +1,1 @@
+- Separate out the longer cases in the main dispatch match with function calls
