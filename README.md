@@ -11,7 +11,7 @@ This is a tool for operating and battery testing with KEL100 series electronic l
 - RS PRO RS-KEL102 (150W)
 - RS PRO RS-KEL103 (300W)
 
-The software for these units looks to be made by Fisher Price, but luckily there is documentation available for interfacing to the unit over USB serial and IP. This project uses USB serial, but the contents of the protocol is (as I understand it) the same, so modifying it to interface over IP should be trivial. My main interest in this unit is battery capacity testing, so this is the primary motivation for writing this tool. But it does also offer control over most other aspects of the load, such as changing mode (constant voltage, constant current, constant power or constant resistance), activating and deactivating the input as well as measurement of voltage, current and power.
+The software for these units looks to be made by Fisher Price, but luckily there is [documentation](serial-protocol.pdf) available for interfacing to the unit over USB serial and IP. This project uses USB serial, but the contents of the protocol is (as I understand it) the same, so modifying it to interface over IP should be trivial. My main interest in this unit is battery capacity testing, so this is the primary motivation for writing this tool. But it does also offer control over most other aspects of the load, such as changing mode (constant voltage, constant current, constant power or constant resistance), activating and deactivating the input as well as measurement of voltage, current and power.
 
 ## Installation
 
