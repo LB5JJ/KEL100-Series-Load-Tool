@@ -114,7 +114,7 @@ def main() -> None:
                 if args.cutoff_voltage is None and args.cutoff_seconds is None and not args.no_cutoff:
                     help.main(command="battery-test", error="Must supply at least one of --cutoff-voltage, --cutoff-seconds or --no-cutoff")
 
-                with open(args.file_base_name + ".cvs", "w") as csv:
+                with open(args.file_base_name + ".csv", "w") as csv:
                     second = []
                     volt = []
 
