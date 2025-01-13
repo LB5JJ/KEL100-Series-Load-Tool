@@ -19,7 +19,7 @@ def sigint(signum, frame):
 
 def main() -> None:
     global args
-    
+
     signal.signal(signal.SIGINT, sigint)
 
     parser = argparse.ArgumentParser(description = "KORAD Electronic Load Utility")
@@ -61,21 +61,21 @@ def main() -> None:
                 load.enabled = False
 
             case "status":
-                state = "On" if load.enabled else "Off"
+                state = "(On)" if load.enabled else "(Off)"
 
                 match load.mode:
                     case Load.Mode.CV:
-                        print(f"Constant Voltage: {load.cv}V ({state})")
+                        print(f"Constant Voltage: {load.cv} V {state}")
                     case Load.Mode.CC:
-                        print(f"Constant Current: {load.cc}A ({state})")
+                        print(f"Constant Current: {load.cc} A {state}")
                     case Load.Mode.CR:
-                        print(f"Constant Resistance: {load.cr}Ω ({state})")
+                        print(f"Constant Resistance: {load.cr} Ω {state}")
                     case Load.Mode.CP:
-                        print(f"Constant Power: {load.cp}W ({state})")
+                        print(f"Constant Power: {load.cp} W {state}")
                 
-                print(f"Voltage: {load.voltage}V")
-                print(f"Current: {load.current}A")
-                print(f"  Power: {load.power}W")
+                print(f"Voltage: {load.voltage} V")
+                print(f"Current: {load.current} A")
+                print(f"  Power: {load.power} W")
             
             case "constant-voltage":
                 if args.argument is None:
@@ -147,7 +147,7 @@ def main() -> None:
                         watt_hours = joules / 3600
 
                         if args.verbose:
-                            print(f"{runtime}s: {voltage}V, {current}A, {power}W, {ampere_hours:.2f}Ah, {watt_hours:.2f}Wh    ", end="\r")
+                            print(f"{runtime} s: {voltage} V, {current} A, {power} W, {ampere_hours:.2f} Ah, {watt_hours:.2f} Wh    ", end="\r")
 
                         csv.write(f"{runtime},{voltage},{current},{power}\n")
         
@@ -164,9 +164,9 @@ def main() -> None:
                     figur, axis = plt.subplots()
 
                     title_mode = f"Constant {'Current' if args.constant_current else 'Power'}"
-                    title_rate = f"{args.constant_current}A" if args.constant_current else f"{args.constant_power}W"
-                    title_ampere_hours = f"{ampere_hours:.2f}Ah" if ampere_hours >= 1 else f"{int(ampere_hours*1000)}mAh"
-                    title_watt_hours = f"{watt_hours:.2f}Wh" if watt_hours >= 1 else f"{int(watt_hours*1000)}mWh"
+                    title_rate = f"{args.constant_current} A" if args.constant_current else f"{args.constant_power} W"
+                    title_ampere_hours = f"{ampere_hours:.2f} Ah" if ampere_hours >= 1 else f"{int(ampere_hours*1000)} mAh"
+                    title_watt_hours = f"{watt_hours:.2f} Wh" if watt_hours >= 1 else f"{int(watt_hours*1000)} mWh"
 
                     axis.set_ylabel("Volt")
                     axis.set_xlabel("Seconds")

@@ -119,10 +119,10 @@ python main.py --serial-port COM3 status
 ```
 
 ```
-Constant Current: 3.5A (On)
-Voltage: 3.9V
-Current: 2.497A
-  Power: 9,7383W
+Constant Current: 3.5 A (On)
+Voltage: 3.9 V
+Current: 2.497 A
+  Power: 9,7383 W
 ```
 
 ### Setup Constant Voltage Mode for `<VOLTAGE>` volts
