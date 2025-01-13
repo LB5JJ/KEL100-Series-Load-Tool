@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 ### Battery Test
 
-Start a battery test on the load connected to COM3, running at a constant current of 3.5A with cutoff after 5400 secods or when the voltage drops below 3.2V. Writes result to report.csv and report.png.
+Start a battery test on the load connected to COM3, running at a constant current of 3.5A with cutoff after 5400 seconds or when the voltage drops below 3.2V. Writes result to report.csv and report.png.
 
 ```shell
 python main.py --serial-port COM3 battery-test \
@@ -74,21 +74,21 @@ python main.py --serial-port COM3 battery-test \
 ```
 
 - `--cutoff-voltage <VOLTAGE>`
-    - Stop test and disable load when voltage drops below <VOLTAGE>
+    - Stop test and disable load when voltage drops below `<VOLTAGE>`
 - `--cutoff-seconds <SECONDS>`
-    - Stop test and disable load after <SECONDS> seconds
+    - Stop test and disable load after `<SECONDS>` seconds
 - `--no-cutoff`
     - Do not automatically stop the test (can be dangerous)
 - `--constant-current <CURRENT>`
-    - Draw a constant current of <CURRENT> amps
+    - Draw a constant current of `<CURRENT>` amps
 - `--constant-power <POWER>`
-    - Draw a constant power of <POWER> watts
+    - Draw a constant power of `<POWER>` watts
 - `--sampling-interval <SECONDS>`
-    - Read new sample every <SECONDS> second (default: 5)
+    - Read new sample every `<SECONDS>` second (default: 5)
 - `--file-base-name <NAME>`
-    - Save report in <NAME>.csv and <NAME>.png (default: report)
+    - Save report in `<NAME>`.csv and `<NAME>`.png (default: report)
 - `--verbose`
-    - Print measurements to console every <sampling-interval> seconds
+    - Print measurements to console every `<sampling-interval>` seconds
 
 ### Identify Product
 
@@ -125,25 +125,25 @@ Current: 2.497A
   Power: 9,7383W
 ```
 
-### Setup Constant Voltage Mode for <VOLTAGE> volts
+### Setup Constant Voltage Mode for `<VOLTAGE>` volts
 
 ```shell
 python main.py --serial-port COM3 constant-voltage <VOLTAGE>
 ```
 
-### Setup Constant Current Mode for <CURRENT> amperes
+### Setup Constant Current Mode for `<CURRENT>` amperes
 
 ```shell
 python main.py --serial-port COM3 constant-current <CURRENT>
 ```
 
-### Setup Constant Power Mode for <POWER> watts
+### Setup Constant Power Mode for `<POWER>` watts
 
 ```shell
 python main.py --serial-port COM3 constant-power <POWER>
 ```
 
-### Setup Constant Resistance Mode for <RESISTANCE> Ω
+### Setup Constant Resistance Mode for `<RESISTANCE>` Ω
 
 ```shell
 python main.py --serial-port COM3 constant-resistance <RESISTANCE>
