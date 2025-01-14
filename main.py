@@ -63,7 +63,7 @@ def main() -> None:
                 status(load)
             
             case "constant-voltage" | "constant-current" | "constant-resistance" | "constant-power":
-                mode(load, command, args.argument)
+                mode(load, command, args)
 
             case "battery-test":
                 battery_test(load, args, lambda : stop)
@@ -73,8 +73,8 @@ def main() -> None:
 
     exit(0)
 
-def mode(load, mode, arg):
-    if arg is None:
+def mode(load, mode, args):
+    if args.argument is None:
         help(command=mode, error="Missing argument")
 
     match mode:
