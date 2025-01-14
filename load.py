@@ -26,66 +26,50 @@ class Load:
         self._conn.write(f"{command}\n".encode('utf-8'))
         return self._conn.read_until().decode('utf-8').strip()
     
-    @property
-    def id(self):
+    def get_id(self):
         return self._query("*IDN?")
     
-    @property
-    def enabled(self) -> bool:
+    def is_enabled(self) -> bool:
         return self._query(":INP?") == "ON"
 
-    @enabled.setter
-    def enabled(self, value: bool) -> bool:
+    def set_enabled(self, value: bool) -> bool:
         self._command(f":INP {'ON' if value else 'OFF'}")
 
-    @property
-    def cv(self) -> float:
+    def get_cv(self) -> float:
         return float(self._query(":VOLT?")[:-1])
     
-    @cv.setter
-    def cv(self, value: float):
+    def set_cv(self, value: float):
         self._command(f":VOLT {value}V")
 
-    @property
-    def cc(self) -> float:
+    def get_cc(self) -> float:
         return float(self._query(":CURR?")[:-1])
 
-    @cc.setter    
-    def cc(self, value: float):
+    def set_cc(self, value: float):
         self._command(f":CURR {value}A")
 
-    @property
-    def cr(self) -> float:
+    def get_cr(self) -> float:
         return float(self._query(":RES?")[:-3])
 
-    @cr.setter
-    def cr(self, value: float):
+    def set_cr(self, value: float):
         self._command(f":RES {value}OHM")
 
-    @property
-    def cp(self) -> float:
+    def get_cp(self) -> float:
         return float(self._query(":POW?")[:-1])
     
-    @cp.setter
-    def cp(self, value: float):
+    def set_cp(self, value: float):
         self._command(f":POW {value}W")
     
-    @property
-    def voltage(self) -> float:
+    def get_voltage(self) -> float:
         return float(self._query(":MEAS:VOLT?")[:-1])
 
-    @property
-    def current(self) -> float:
+    def get_current(self) -> float:
         return float(self._query(":MEAS:CURR?")[:-1])
 
-    @property
-    def power(self) -> float:
+    def get_power(self) -> float:
         return float(self._query(":MEAS:POW?")[:-1])
 
-    @property
-    def mode(self) -> Mode:
+    def get_mode(self) -> Mode:
         return self.Mode(self._query(":FUNC?"))
 
-    @mode.setter
-    def mode(self, value: Mode):
+    def set_mode(self, value: Mode):
         self._command(":FUNC " + value.value)

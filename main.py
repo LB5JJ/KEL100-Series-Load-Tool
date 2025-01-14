@@ -51,13 +51,13 @@ def main() -> None:
                 help.ports()
 
             case "id":
-                print(load.id)
+                print(load.get_id())
 
             case "enable":
-                load.enabled = True
+                load.set_enabled(True)
 
             case "disable":
-                load.enabled = False
+                load.set_enabled(False)
 
             case "status":
                 status(load)
@@ -79,54 +79,52 @@ def mode(load, mode, args):
 
     match mode:
         case "constant-voltage":
-            load.cv = float(args.argument)
-            load.mode = Load.Mode.CV
+            load.set_cv(float(args.argument))
+            load.set_mode(Load.Mode.CV)
 
         case "constant-current":
-            load.cc = float(args.argument)
-            load.mode = Load.Mode.CC
+            load.set_cc(float(args.argument))
+            load.set_mode(Load.Mode.CC)
 
         case "constant-resistance":
-            load.cr = float(args.argument)
-            load.mode = Load.Mode.CR
+            load.set_cr(float(args.argument))
+            load.set_mode(Load.Mode.CR)
 
         case "constant-power":
-            load.cp = float(args.argument)
-            load.mode = Load.Mode.CP
+            load.set_cp(float(args.argument))
+            load.set_mode(Load.Mode.CP)
 
 
 def status(load):
-    state = "(On)" if load.enabled else "(Off)"
+    state = "(On)" if load.is_enabled() else "(Off)"
 
-    match load.mode:
+    match load.get_mode():
         case Load.Mode.CV:
-            print(f"Constant Voltage: {load.cv} V {state}")
+            print(f"Constant Voltage: {load.get_cv()} V {state}")
         case Load.Mode.CC:
-            print(f"Constant Current: {load.cc} A {state}")
+            print(f"Constant Current: {load.get_cc()} A {state}")
         case Load.Mode.CR:
-            print(f"Constant Resistance: {load.cr} Ω {state}")
+            print(f"Constant Resistance: {load.get_cr()} Ω {state}")
         case Load.Mode.CP:
-            print(f"Constant Power: {load.cp} W {state}")
+            print(f"Constant Power: {load.get_cp()} W {state}")
                 
-    print(f"Voltage: {load.voltage} V")
-    print(f"Current: {load.current} A")
-    print(f"  Power: {load.power} W")
+    print(f"Voltage: {load.get_voltage()} V")
+    print(f"Current: {load.get_current()} A")
+    print(f"  Power: {load.get_power()} W")
 
 
 def battery_test(load, args, stopped):
     if args.constant_current and args.constant_power is None:
-        load.cc = float(args.constant_current)
-        load.mode = Load.Mode.CC
+        load.set_cc(float(args.constant_current))
+        load.set_mode(Load.Mode.CC)
     elif args.constant_power and args.constant_current is None:
-        load.cp = float(args.constant_power)
-        load.mode = Load.Mode.CP
+        load.set_cp(float(args.constant_power))
+        load.set_mode(Load.Mode.CP)
     else:
         help.main(command="battery-test", error="Must supply exactly one of --constant-current or --constant-power")
 
     if args.cutoff_voltage is None and args.cutoff_seconds is None and not args.no_cutoff:
         help.main(command="battery-test", error="Must supply at least one of --cutoff-voltage, --cutoff-seconds or --no-cutoff")
-
-    print(args)
 
     with open(args.file_base_name + ".csv", "w") as csv:
         second = []
@@ -139,7 +137,7 @@ def battery_test(load, args, stopped):
 
         start = int(time.time())
 
-        load.enabled = True
+        load.set_enabled(True)
 
         ampere_hours = 0
         watt_hours = 0
@@ -147,9 +145,9 @@ def battery_test(load, args, stopped):
         while not stopped():
             runtime = int(time.time()) - start
 
-            voltage = load.voltage
-            current = load.current
-            power = load.power
+            voltage = load.get_voltage()
+            current = load.get_current()
+            power = load.get_power()
 
             second.append(runtime)
             volt.append(voltage)
@@ -173,7 +171,7 @@ def battery_test(load, args, stopped):
 
             time.sleep(args.sampling_interval)
 
-        load.enabled = False
+        load.set_enabled(False)
 
         figur, axis = plt.subplots()
 
