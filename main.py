@@ -7,18 +7,15 @@ import matplotlib.pyplot as plt
 import help
 from load import Load
 
-stop = False
-args = None
-
-def sigint(signum, frame):
-    global stop
-    if args.command.lower() == "battery-test":
-        stop = True
-    else:
-        exit(0)
-
 def main() -> None:
-    global args
+    stop = False
+
+    def sigint(signum, frame):
+        if args.command.lower() == "battery-test":
+            nonlocal stop
+            stop = True
+        else:
+            exit(0)
 
     signal.signal(signal.SIGINT, sigint)
 
@@ -69,7 +66,7 @@ def main() -> None:
                 mode(load, command, args.argument)
 
             case "battery-test":
-                battery_test(load, args)
+                battery_test(load, args, lambda : stop)
 
             case _:
                 help.main()
@@ -116,7 +113,7 @@ def status(load):
     print(f"  Power: {load.power} W")
 
 
-def battery_test(load, args):
+def battery_test(load, args, stopped):
     if args.constant_current and args.constant_power is None:
         load.cc = float(args.constant_current)
         load.mode = Load.Mode.CC
@@ -130,7 +127,7 @@ def battery_test(load, args):
         help.main(command="battery-test", error="Must supply at least one of --cutoff-voltage, --cutoff-seconds or --no-cutoff")
 
     print(args)
-    
+
     with open(args.file_base_name + ".csv", "w") as csv:
         second = []
         volt = []
@@ -147,7 +144,7 @@ def battery_test(load, args):
         ampere_hours = 0
         watt_hours = 0
 
-        while not stop:
+        while not stopped():
             runtime = int(time.time()) - start
 
             voltage = load.voltage
