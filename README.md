@@ -32,19 +32,19 @@ python -m venv .venv
 #### PowerShell
 
 ```shell
-.venv/Activate.ps1
+.venv/Scripts/Activate.ps1
 ```
 
 #### BASH
 
 ```shell
-source .venv/activate
+source .venv/Scripts/activate
 ```
 
 #### Windows
 
 ```shell
-.venv/activate.bat
+.venv/Scripts/activate.bat
 ```
 
 ### Install requirement in the virtual environment
